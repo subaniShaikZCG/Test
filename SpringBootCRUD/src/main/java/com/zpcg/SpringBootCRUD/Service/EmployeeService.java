@@ -52,6 +52,11 @@ public class EmployeeService {
 		return employee;
 	}
 
+	public List<Employee> getDataBySalary(Double salary) {
+		List<Employee> list = employeeDao.findBySalary(salary);
+		return list;
+	}
+
 //	public List<Employee> deleteEmployee(Employee employee) {
 //		List<Employee> list = employeeDao.deleteAll(getAllData(E));
 //		return list ;

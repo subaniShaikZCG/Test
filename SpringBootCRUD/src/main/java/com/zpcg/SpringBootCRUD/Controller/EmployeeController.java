@@ -79,4 +79,10 @@ public class EmployeeController {
 	{
 		employeeService.deletEmployee(empId);
 	}
+	
+	@RequestMapping(value = "/getEmployeeBySalary/{salary}", method = RequestMethod.GET)
+	public ResponseEntity<List<Employee>> getEmployeeBySalary(@PathVariable Double salary){
+		List<Employee> empl = employeeService.getDataBySalary(salary);
+		return new ResponseEntity<List<Employee>>(empl, HttpStatus.OK);
+	}
 }
