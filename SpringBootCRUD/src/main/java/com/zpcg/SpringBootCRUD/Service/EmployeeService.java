@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zpcg.SpringBootCRUD.Model.Employee;
+import com.zpcg.SpringBootCRUD.Repository.DesignationDao;
 import com.zpcg.SpringBootCRUD.Repository.EmployeeDao;
 
 @Service
@@ -14,6 +15,9 @@ public class EmployeeService {
 
 	@Autowired
 	EmployeeDao employeeDao;
+	
+	@Autowired
+	DesignationDao designationDao;
 
 	public void saveEmployee(Employee employee) {
 		String firstName = employee.getFirstName();
@@ -55,6 +59,11 @@ public class EmployeeService {
 	public List<Employee> getDataBySalary(Double salary) {
 		List<Employee> list = employeeDao.findBySalary(salary);
 		return list;
+	}
+
+	public List<Employee> getEmpByDesg(String designationName) {
+		List<Employee> lis = designationDao.findByDesignationName(designationName);
+		return lis;
 	}
 
 //	public List<Employee> deleteEmployee(Employee employee) {

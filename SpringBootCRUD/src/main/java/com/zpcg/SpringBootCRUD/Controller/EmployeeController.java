@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zpcg.SpringBootCRUD.Model.Employee;
@@ -85,4 +86,15 @@ public class EmployeeController {
 		List<Employee> empl = employeeService.getDataBySalary(salary);
 		return new ResponseEntity<List<Employee>>(empl, HttpStatus.OK);
 	}
+	
+//	@RequestMapping(value = "/between", method = RequestMethod.GET)
+//	public ResponseEntity<List<Employee>> between(@RequestParam Double minSalary, )
+	
+	@RequestMapping(value="/getEmpByDesignation/{designationName}", method = RequestMethod.GET)
+	public ResponseEntity<List<Employee>> getEmployeeByDesg(@PathVariable String designationName){
+		List<Employee> empl = employeeService.getEmpByDesg(designationName);
+		return new ResponseEntity<List<Employee>>(empl, HttpStatus.OK);
+		
+	}
+	
 }
