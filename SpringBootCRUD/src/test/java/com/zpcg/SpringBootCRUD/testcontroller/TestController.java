@@ -3,16 +3,32 @@ package com.zpcg.SpringBootCRUD.testcontroller;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hamcrest.Matchers;
+import org.mockito.ArgumentMatchers;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.zpcg.SpringBootCRUD.Model.Employee;
+import com.zpcg.SpringBootCRUD.Service.EmployeeService;
 
 public class TestController extends AbstractTest {
-
+	
+	@Autowired
+	MockMvc mockMvc;
+	
+	@MockBean
+	private EmployeeService employeeService;
+	
 	@Override
 	@Before
 	public void setUp() {
@@ -22,7 +38,7 @@ public class TestController extends AbstractTest {
 	@Test
 	public void getEmployeesList() throws Exception {
 		String uri = "/employees";
-		MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.APPLICATION_JSON_VALUE))
+		MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.APPLICATION_JSON_VALUE))
 				.andReturn();
 
 		int status = mvcResult.getResponse().getStatus();
@@ -31,6 +47,19 @@ public class TestController extends AbstractTest {
 		Employee[] productlist = super.mapFromJson(content, Employee[].class);
 		assertTrue(productlist.length > 0);
 	}
+	
+	 @Test
+	    public void testGetExample() throws Exception {
+		 String uri = "/getEmployees";
+	        List<Employee> empl = new ArrayList<>();
+	        Employee emply = new Employee();
+	        emply.setEmpId(1);
+	        emply.setFirstName("Arun");
+	        empl.add(emply);
+	        Mockito.when(employeeService.getAllData()).thenReturn(empl);
+//	        mockMvc.perform(get("/getEmployees")).andExpect(status().isOk()).andExpect(jsonPath("$", Matchers.hasSize(1)))
+//	                .andExpect(jsonPath("$[0].name", Matchers.equalTo("Arun")));
+	    }
 
 	@Test
 	public void createEmployee() throws Exception {
