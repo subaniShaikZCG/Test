@@ -10,7 +10,7 @@
 	<groupId>com.zpcg</groupId>
 	<artifactId>springbootcrud</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>SpringBootCRUD</name>
+	<name>springbootcrud</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>

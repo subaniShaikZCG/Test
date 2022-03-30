@@ -97,4 +97,16 @@ public class EmployeeController {
 		
 	}
 	
+	@RequestMapping(value="/getDataByOrder", method = RequestMethod.GET)
+	public ResponseEntity<List<Employee>> getEmployeeData(){
+		List<Employee> empl = employeeService.findAll();
+		return new ResponseEntity<List<Employee>>(empl, HttpStatus.OK);
+	}
+	
+//	@RequestMapping(value = "/getEmployees", method = RequestMethod.GET)
+//	public ResponseEntity<List<Employee>> getAllEmployees() {
+//		List<Employee> listEmp = employeeService.getAllData();
+//		return new ResponseEntity<List<Employee>>(listEmp, HttpStatus.OK);
+//
+//	}
 }
