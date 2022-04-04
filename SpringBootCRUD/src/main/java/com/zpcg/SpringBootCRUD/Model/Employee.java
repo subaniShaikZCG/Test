@@ -1,5 +1,7 @@
 package com.zpcg.SpringBootCRUD.Model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -28,5 +30,6 @@ public class Employee {
 	private String location;
 	private String dept;
 	private Double salary;
+	
 		
 }

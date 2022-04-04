@@ -13,10 +13,17 @@ public interface EmployeeDao extends JpaRepository<Employee, Integer> {
 
 	List<Employee> findBySalary(Double salary);
 
-//	List<Employee> findByDesg(String designationName);
+     //	List<Employee> findByDesg(String designationName);
 
-//	List<Employee> deleteAll(Employee employee);
+     //	List<Employee> deleteAll(Employee employee);
 	
-	@Query(value = "SELECT e FROM Employee e ORDER BY lastName")
+	
+	// a custom query for the retrieving employee based upon names
+	@Query(value = "SELECT e FROM Employee e ORDER BY lastName  ")
 	   public List<Employee> findAllSortedByName();
+	
+	
+	// a custom query for the retrieving employee based upon salary
+	@Query(value = "SELECT e FROM Employee e ORDER BY salary DESC")
+	   public List<Employee> findAllSortedBySalary();
 }

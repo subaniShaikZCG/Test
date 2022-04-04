@@ -70,6 +70,11 @@ public class EmployeeService {
 		List<Employee> lis = employeeDao.findAllSortedByName();
 		return lis;
 	}
+	
+	public List<Employee> findAllEmps() {
+		List<Employee> lis = employeeDao.findAllSortedBySalary();
+		return lis;
+	}
 //	public List<Employee> deleteEmployee(Employee employee) {
 //		List<Employee> list = employeeDao.deleteAll(getAllData(E));
 //		return list ;

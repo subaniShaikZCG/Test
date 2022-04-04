@@ -24,11 +24,11 @@ public class EmployeeController {
 
 	@Autowired
 	EmployeeService employeeService;
-	
+
 	@GetMapping("/getData")
 	public String getData() {
 		return "data from springBootZPCG";
-		
+
 	}
 
 	@RequestMapping(value = "/saveEmployee", method = RequestMethod.POST)
@@ -39,7 +39,8 @@ public class EmployeeController {
 		return re;
 	}
 
-	@RequestMapping(value = "/getEmployees", method = RequestMethod.GET)
+//	@RequestMapping(value = "/getEmployees", method = RequestMethod.GET)
+	@GetMapping("/getMapping")
 	public ResponseEntity<List<Employee>> getAllEmployees() {
 		List<Employee> listEmp = employeeService.getAllData();
 		return new ResponseEntity<List<Employee>>(listEmp, HttpStatus.OK);
@@ -52,13 +53,12 @@ public class EmployeeController {
 		ResponseEntity<Employee> re = new ResponseEntity<Employee>(HttpStatus.CREATED);
 		return re;
 	}
-	
+
 	@RequestMapping(value = "/getEmployee/{eid}", method = RequestMethod.GET)
 	public ResponseEntity<Employee> getDataById(@PathVariable Integer eid) {
 		Optional<Employee> empl = employeeService.getEmployee(eid);
-		return new ResponseEntity<Employee>(empl.get(),HttpStatus.OK);
+		return new ResponseEntity<Employee>(empl.get(), HttpStatus.OK);
 	}
-	
 
 //	@RequestMapping(value="/update", method = RequestMethod.DELETE)
 //	public ResponseEntity<Employee> deleteEmployeeData(@RequestBody Employee employee) {
@@ -74,35 +74,40 @@ public class EmployeeController {
 		return dt;
 
 	}
-	
+
 	@DeleteMapping("/deleteByids/{empId}")
-	public void deleteBook(@PathVariable("empId") int empId)
-	{
+	public void deleteBook(@PathVariable("empId") int empId) {
 		employeeService.deletEmployee(empId);
 	}
-	
+
 	@RequestMapping(value = "/getEmployeeBySalary/{salary}", method = RequestMethod.GET)
-	public ResponseEntity<List<Employee>> getEmployeeBySalary(@PathVariable Double salary){
+	public ResponseEntity<List<Employee>> getEmployeeBySalary(@PathVariable Double salary) {
 		List<Employee> empl = employeeService.getDataBySalary(salary);
 		return new ResponseEntity<List<Employee>>(empl, HttpStatus.OK);
 	}
-	
+
 //	@RequestMapping(value = "/between", method = RequestMethod.GET)
 //	public ResponseEntity<List<Employee>> between(@RequestParam Double minSalary, )
-	
-	@RequestMapping(value="/getEmpByDesignation/{designationName}", method = RequestMethod.GET)
-	public ResponseEntity<List<Employee>> getEmployeeByDesg(@PathVariable String designationName){
+
+	@RequestMapping(value = "/getEmpByDesignation/{designationName}", method = RequestMethod.GET)
+	public ResponseEntity<List<Employee>> getEmployeeByDesg(@PathVariable String designationName) {
 		List<Employee> empl = employeeService.getEmpByDesg(designationName);
 		return new ResponseEntity<List<Employee>>(empl, HttpStatus.OK);
-		
+
 	}
-	
-	@RequestMapping(value="/getDataByOrder", method = RequestMethod.GET)
-	public ResponseEntity<List<Employee>> getEmployeeData(){
+
+	@RequestMapping(value = "/getDataByOrder", method = RequestMethod.GET)
+	public ResponseEntity<List<Employee>> getEmployeeData() {
 		List<Employee> empl = employeeService.findAll();
 		return new ResponseEntity<List<Employee>>(empl, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/getDataByOrderBySalary", method = RequestMethod.GET)
+	public ResponseEntity<List<Employee>> getEmployeeDataBySalary() {
+		List<Employee> empl = employeeService.findAllEmps();
+		return new ResponseEntity<List<Employee>>(empl, HttpStatus.OK);
+	}
+
 //	@RequestMapping(value = "/getEmployees", method = RequestMethod.GET)
 //	public ResponseEntity<List<Employee>> getAllEmployees() {
 //		List<Employee> listEmp = employeeService.getAllData();
