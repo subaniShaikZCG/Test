@@ -1,5 +1,6 @@
 package com.zpcg.SpringBootCRUD.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,21 +16,40 @@ public class EmployeeService {
 
 	@Autowired
 	EmployeeDao employeeDao;
-	
+
 	@Autowired
 	DesignationDao designationDao;
 
-	public void saveEmployee(Employee employee) {
+	public Employee saveEmployee(Employee employee) {
 		String firstName = employee.getFirstName();
 		String lastName = employee.getLastName();
 		String fullName = firstName.concat(lastName);
 		employee.setFullName(fullName);
-		employeeDao.save(employee);
+//		employeeDao.save(employee);
+		return employee;
+	}
+
+	public Employee saveEmployees(Employee employee) {
+		employee.setEmpId(21);
+		employee.setFirstName("subani");
+		employee.setLastName("shaik");
+		employee.setFullName("subanishaik");
+		employee.setDept("java");
+		employee.setLocation("hyd");
+		employee.setSalary(1234.12);
+		return employee;
 	}
 
 	public List<Employee> getAllData() {
 		List<Employee> list = employeeDao.findAll();
 		return list;
+	}
+
+	public List<Employee> getEmpls() {
+		List<Employee> empls = new ArrayList<>();
+		Employee empl = new Employee();
+		empls.add(empl);
+		return empls;
 	}
 
 	public void updateEmployee(Employee employee) {
@@ -38,17 +58,18 @@ public class EmployeeService {
 		String fullName = firstName.concat(lastName);
 		employee.setFullName(fullName);
 		employeeDao.save(employee);
-		
+
 	}
 
 	public void deleteEmpData(int empId) {
 		employeeDao.deleteById(empId);
-		
+
 	}
 
 	public void deletEmployee(int empId) {
 		employeeDao.deleteById(empId);
 		
+
 	}
 
 	public Optional<Employee> getEmployee(Integer eid) {
@@ -65,12 +86,12 @@ public class EmployeeService {
 		List<Employee> lis = designationDao.findByDesignationName(designationName);
 		return lis;
 	}
-	
+
 	public List<Employee> findAll() {
 		List<Employee> lis = employeeDao.findAllSortedByName();
 		return lis;
 	}
-	
+
 	public List<Employee> findAllEmps() {
 		List<Employee> lis = employeeDao.findAllSortedBySalary();
 		return lis;

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,7 +32,8 @@ public class EmployeeController {
 
 	}
 
-	@RequestMapping(value = "/saveEmployee", method = RequestMethod.POST)
+//	@RequestMapping(value = "/saveEmployee", method = RequestMethod.POST)
+	@PostMapping("/saveEmployee")
 	public ResponseEntity<Employee> saveEmployeeData(@RequestBody Employee employee) {
 		employeeService.saveEmployee(employee);
 		ResponseEntity<Employee> re = new ResponseEntity<Employee>(HttpStatus.CREATED);
@@ -39,10 +41,22 @@ public class EmployeeController {
 		return re;
 	}
 
-//	@RequestMapping(value = "/getEmployees", method = RequestMethod.GET)
-	@GetMapping("/getMapping")
+	@PostMapping("/postMapping")
+	public ResponseEntity<Employee> saveEmployees(@RequestBody Employee employee) {
+		employee = employeeService.saveEmployees(employee);
+		return new ResponseEntity<>(employee, HttpStatus.CREATED);
+	}
+
+	@RequestMapping(value = "/getEmployees", method = RequestMethod.GET)
 	public ResponseEntity<List<Employee>> getAllEmployees() {
 		List<Employee> listEmp = employeeService.getAllData();
+		return new ResponseEntity<List<Employee>>(listEmp, HttpStatus.OK);
+
+	}
+	
+	@GetMapping("/getMapping")
+	public ResponseEntity<List<Employee>> getEmpls() {
+		List<Employee> listEmp = employeeService.getEmpls();
 		return new ResponseEntity<List<Employee>>(listEmp, HttpStatus.OK);
 
 	}
@@ -70,7 +84,7 @@ public class EmployeeController {
 	@RequestMapping(value = "/deleteById/{empId}", method = RequestMethod.DELETE)
 	public ResponseEntity<Employee> deleteEmpData(@PathVariable("empId") int empId) {
 		employeeService.deleteEmpData(empId);
-		ResponseEntity<Employee> dt = new ResponseEntity<Employee>(HttpStatus.GONE);
+		ResponseEntity<Employee> dt = new ResponseEntity<Employee>(HttpStatus.NO_CONTENT);
 		return dt;
 
 	}
@@ -101,7 +115,7 @@ public class EmployeeController {
 		List<Employee> empl = employeeService.findAll();
 		return new ResponseEntity<List<Employee>>(empl, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/getDataByOrderBySalary", method = RequestMethod.GET)
 	public ResponseEntity<List<Employee>> getEmployeeDataBySalary() {
 		List<Employee> empl = employeeService.findAllEmps();
