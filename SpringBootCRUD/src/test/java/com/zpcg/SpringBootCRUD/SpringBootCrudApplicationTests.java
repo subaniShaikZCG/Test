@@ -58,8 +58,8 @@ class SpringBootCrudApplicationTests {
 		empl.setSalary(5656.00);
 		empls.add(empl);
 		Mockito.when(employeeService.getEmpls()).thenReturn(empls);
-//		System.out.println(empls);
-//		System.out.println("ok");
+		System.out.println(empls);
+		System.out.println("ok");
 		mockMvc.perform(get("/employee/getMapping")).andExpect(status().isOk())
 				.andExpect(jsonPath("$.size()").value(empls.size())).andDo(print());
 	}
@@ -94,7 +94,7 @@ class SpringBootCrudApplicationTests {
 	 
 	 @Test
 	  void shouldDeleteTutorial() throws Exception {
-	    int empId = 3;
+	    int empId = 5;
 	    doNothing().when(employeeService).deletEmployee(empId);
 	    mockMvc.perform(delete("/employee/deleteById/{empId}", empId))
 	         .andExpect(status().isNoContent())
@@ -102,8 +102,6 @@ class SpringBootCrudApplicationTests {
 	  }
 
 }
-
-
 
 //@Test
 //public void testDeleteExample() throws Exception {
