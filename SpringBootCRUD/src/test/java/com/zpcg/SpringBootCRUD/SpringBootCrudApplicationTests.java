@@ -94,7 +94,7 @@ class SpringBootCrudApplicationTests {
 	 
 	 @Test
 	  void shouldDeleteTutorial() throws Exception {
-	    int empId = 5;
+	    int empId = 6;
 	    doNothing().when(employeeService).deletEmployee(empId);
 	    mockMvc.perform(delete("/employee/deleteById/{empId}", empId))
 	         .andExpect(status().isNoContent())
