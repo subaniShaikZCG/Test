@@ -83,7 +83,7 @@ class SpringBootCrudApplicationTests {
 	
 	 @Test
 	  void shouldCreatePostTest() throws Exception {
-	    Employee empl = new Employee(1, "subani", "shaik", "subanishaik", "hyd", "java", 1234.00);
+	    Employee empl = new Employee(1, "prabha", "karan", "prabhakaran", "bglr", "sdet", 3241.00);
 	    mockMvc.perform(post("/employee/postMapping").contentType(MediaType.APPLICATION_JSON)
 	        .content(objectMapper.writeValueAsString(empl)))
 	        .andExpect(status().isCreated())
