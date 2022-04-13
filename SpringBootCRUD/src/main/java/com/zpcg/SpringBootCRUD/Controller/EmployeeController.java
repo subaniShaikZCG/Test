@@ -53,7 +53,7 @@ public class EmployeeController {
 		return new ResponseEntity<List<Employee>>(listEmp, HttpStatus.OK);
 
 	}
-	
+
 	@GetMapping("/getMapping")
 	public ResponseEntity<List<Employee>> getEmpls() {
 		List<Employee> listEmp = employeeService.getEmpls();
@@ -64,7 +64,7 @@ public class EmployeeController {
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public ResponseEntity<Employee> updateEmployeeData(@RequestBody Employee employee) {
 		employeeService.updateEmployee(employee);
-		ResponseEntity<Employee> re = new ResponseEntity<Employee>(HttpStatus.CREATED);
+		ResponseEntity<Employee> re = new ResponseEntity<Employee>(HttpStatus.UPGRADE_REQUIRED);
 		return re;
 	}
 
@@ -74,12 +74,12 @@ public class EmployeeController {
 		return new ResponseEntity<Employee>(empl.get(), HttpStatus.OK);
 	}
 
-//	@RequestMapping(value="/update", method = RequestMethod.DELETE)
-//	public ResponseEntity<Employee> deleteEmployeeData(@RequestBody Employee employee) {
-//		employeeService.deleteEmployee(employee);
-//		ResponseEntity<Employee> re = new ResponseEntity<Employee>(HttpStatus.GONE);
-//		return re;
-//	}
+	@RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
+	public ResponseEntity<Employee> deleteEmployeeData() {
+		employeeService.deleteEmployees();
+		ResponseEntity<Employee> re = new ResponseEntity<Employee>(HttpStatus.GONE);
+		return re;
+	}
 
 	@RequestMapping(value = "/deleteById/{empId}", method = RequestMethod.DELETE)
 	public ResponseEntity<Employee> deleteEmpData(@PathVariable("empId") int empId) {
@@ -128,4 +128,9 @@ public class EmployeeController {
 //		return new ResponseEntity<List<Employee>>(listEmp, HttpStatus.OK);
 //
 //	}
+	
+	@GetMapping("/all-items-from-database")
+	public List<Employee> retrieveAllItems() {
+		return employeeService.retrieveAllItems();
+	}
 }

@@ -25,7 +25,7 @@ public class EmployeeService {
 		String lastName = employee.getLastName();
 		String fullName = firstName.concat(lastName);
 		employee.setFullName(fullName);
-//		employeeDao.save(employee);
+		employeeDao.save(employee);
 		return employee;
 	}
 
@@ -68,7 +68,6 @@ public class EmployeeService {
 
 	public void deletEmployee(int empId) {
 		employeeDao.deleteById(empId);
-		
 
 	}
 
@@ -101,4 +100,15 @@ public class EmployeeService {
 //		return list ;
 //		
 //	}
+
+	public Employee deleteEmployees() {
+		employeeDao.deleteAll();
+		return null;
+
+	}
+
+	public List<Employee> retrieveAllItems() {
+		List<Employee> list = employeeDao.findAll();
+		return list;
+	}
 }
