@@ -70,6 +70,8 @@ public class EmployeeService {
 		employeeDao.deleteById(empId);
 
 	}
+	
+
 
 	public Optional<Employee> getEmployee(Integer eid) {
 		Optional<Employee> employee = employeeDao.findById(eid);
@@ -101,9 +103,8 @@ public class EmployeeService {
 //		
 //	}
 
-	public Employee deleteEmployees() {
+	public void deleteEmployees() {
 		employeeDao.deleteAll();
-		return null;
 
 	}
 
@@ -111,4 +112,20 @@ public class EmployeeService {
 		List<Employee> list = employeeDao.findAll();
 		return list;
 	}
+
+	public void deletEmployer(int empId) {
+		employeeDao.findById(empId);
+		employeeDao.deleteById(empId);
+		
+		
+		
+	}
+	
+//	public void deletEmployerr(Employee employee) {
+//		employee = employeeDao.returnEmployee(employee.getEmpId());
+//		employeeDao.delete(employee);
+//		employeeDao.deleteById(empId);
+//		return "SUCCESS";
+		
+//	}
 }

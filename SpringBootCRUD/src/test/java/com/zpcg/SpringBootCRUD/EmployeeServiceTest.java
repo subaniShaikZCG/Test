@@ -1,5 +1,20 @@
 package com.zpcg.SpringBootCRUD;
 
+//import static org.junit.Assert.assertNull;
+//import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
+//import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
@@ -7,21 +22,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.MediaType;
-
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.List;
-
-import java.util.Arrays;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.web.servlet.MockMvc;
 
 import com.zpcg.SpringBootCRUD.Model.Employee;
 import com.zpcg.SpringBootCRUD.Repository.EmployeeDao;
@@ -30,12 +32,17 @@ import com.zpcg.SpringBootCRUD.Service.EmployeeService;
 @ExtendWith(MockitoExtension.class)
 public class EmployeeServiceTest {
 
+	@Autowired
+	MockMvc mockMvc;
+
 	@InjectMocks
 	private EmployeeService employeeService;
 
 	@Mock
 	private EmployeeDao employeeDao;
 
+	
+	//getting the total data testing
 	@Test
 	public void getAllDataTest() {
 		when(employeeDao.findAll()).thenReturn(
@@ -46,7 +53,9 @@ public class EmployeeServiceTest {
 		assertEquals(items, items);
 		assertEquals(12345.0, items.get(0).getSalary());
 	}
-
+	
+	
+	// save method test case
 	@Test
 	public void postDataTest() throws Exception {
 		Employee employee = new Employee();
@@ -68,21 +77,80 @@ public class EmployeeServiceTest {
 		assertEquals("subani", emps.getFirstName());
 		System.out.println(emps.getFirstName() + " shaik");
 	}
+	
+	//put test case 
+
+	@SuppressWarnings("deprecation")
+	@Test
+	public void savedEmployee_put() {
+		Employee employee = new Employee();
+		employee.setEmpId(25);
+		employee.setFirstName("raju");
+		employee.setLastName("raju");
+		employee.setFullName("rajuraju");
+		employee.setDept("cse");
+		employee.setLocation("bglr");
+		employee.setSalary(22222.12);
+		Mockito.when(employeeDao.save(any(Employee.class))).thenReturn(employee);
+
+		Employee savedCustomer = employeeDao.save(employee);
+		assertThat(savedCustomer.getFirstName()).isNotNull();
+		assertEquals(savedCustomer.getFirstName(), "raju");
+	}
+
+//	@Test()
+//	public void deleteAllDataTest() throws Exception {
+////		Employee empl = new Employee();
+////		Employee empl2 = new Employee();
+////		EmployeeService emp = new EmployeeService();
+////		doNothing().when(employeeDao).deleteAll();
+////		int expectedResult = 0;
+//		employeeService.deleteEmployees();
+////		System.out.println(str);
+////		assertEquals("DELETED", str);
+////		assertNotNull(str);
+//	}
 
 	@Test
-	public void deleteAllDataTest() {
+	public void deleteApplicationById() throws Exception {
 		Employee empl = new Employee();
-		Employee empl2 = new Employee();
+		empl.setFirstName("test name");
+		empl.setEmpId(1);
+		when(employeeDao.findById(empl.getEmpId())).thenReturn(Optional.of(empl));
+		employeeService.deletEmployer(empl.getEmpId());
+		verify(employeeDao).deleteById(empl.getEmpId());
 
-//		when(employeeDao.deleteAll()).thenReturn(
-//				Arrays.asList(new Employee(11, "subani", "shaik", "subanishaik", "java engineer", "hyd", 12345.0)));
-		doNothing().when(employeeDao).deleteAll();
-		Employee empls = employeeService.deleteEmployees();
+//		Employee employee = new Employee();
+//		doThrow(Exception).when(employeeService.deletEmployer(12)).thenReturn("Success");
+//		assertThat(employee.getFirstName()).isNull();
+//		Employee employee = new Employee();
+//		EmployeeService emps = mock(EmployeeService.class);
+//		when(emps.deletEmployer(12)).thenReturn("Approved");
+//		Mockito.doReturn(employee).when(employeeDao.deleteById(12))
+//		doNothing().when(employeeService.deletEmployer(12));
+//		doNothing().when(employeeDao.deleteById(12));
+//		assertThat(employee.getFirstName()).isNull();
+//    	Mockito.when(employeeDao.deleteById(ArgumentMatchers.any())).thenReturn(employee);
+//        mockMvc.perform(MockMvcRequestBuilders.delete("/applications", 10001L))
+//                .andExpect(status().isOk());
 
-//		System.out.println(items);
-		assertNotNull(empls);
-//		assertEquals(empls, empls);
-//		assertEquals(12345.0, empls.get(0).getSalary());
+//        String emps = employeeService.deletEmployee(1);
+//        assertEquals(emps, "DELETED");
+	}
+
+	@Test
+	public void should_throw_exception_when_user_doesnt_exist() {
+		Employee empls = new Employee();
+		empls.setEmpId(1);
+		empls.setFirstName("subani");
+
+		given(employeeDao.findById(anyInt()));
+		employeeService.deletEmployer(empls.getEmpId());
+	}
+
+	private void given(Optional<Employee> findById) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Test

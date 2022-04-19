@@ -26,4 +26,6 @@ public interface EmployeeDao extends JpaRepository<Employee, Integer> {
 	// a custom query for the retrieving employee based upon salary
 	@Query(value = "SELECT e FROM Employee e ORDER BY salary DESC")
 	   public List<Employee> findAllSortedBySalary();
+
+//	Employee returnEmployee(int empId);
 }

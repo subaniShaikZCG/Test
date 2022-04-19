@@ -93,6 +93,12 @@ public class EmployeeController {
 	public void deleteBook(@PathVariable("empId") int empId) {
 		employeeService.deletEmployee(empId);
 	}
+	
+	@DeleteMapping("/deletByids/{empId}")
+	public String delete(@PathVariable("empId") int empId) {
+		employeeService.deletEmployer(empId);
+		return "Deleted";
+	}
 
 	@RequestMapping(value = "/getEmployeeBySalary/{salary}", method = RequestMethod.GET)
 	public ResponseEntity<List<Employee>> getEmployeeBySalary(@PathVariable Double salary) {
