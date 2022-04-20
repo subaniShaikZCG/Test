@@ -2,18 +2,21 @@ package com.zpcg.SpringBootCRUD;
 
 //import static org.junit.Assert.assertNull;
 //import static org.junit.Assert.assertThat;
-import static org.assertj.core.api.Java6Assertions.assertThat;
+//import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 //import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,7 +43,14 @@ public class EmployeeServiceTest {
 
 	@Mock
 	private EmployeeDao employeeDao;
-
+	
+	@Test
+	public void getUsersTest() {
+		when(employeeDao.findAll()).thenReturn(Stream.of(new Employee(12, "test", "test", "testtest", "hyd", "java", 1212.12), new 
+				Employee(13, "subani", "shaik", "subanishaik", "java engineer", "hyd", 12345.0)).collect(Collectors.toList()));
+		assertEquals(2, employeeService.getAllData().size());
+	}
+	
 	
 	//getting the total data testing
 	@Test
@@ -80,7 +90,7 @@ public class EmployeeServiceTest {
 	
 	//put test case 
 
-	@SuppressWarnings("deprecation")
+//	@SuppressWarnings("deprecation")
 	@Test
 	public void savedEmployee_put() {
 		Employee employee = new Employee();
@@ -94,7 +104,7 @@ public class EmployeeServiceTest {
 		Mockito.when(employeeDao.save(any(Employee.class))).thenReturn(employee);
 
 		Employee savedCustomer = employeeDao.save(employee);
-		assertThat(savedCustomer.getFirstName()).isNotNull();
+//		assertThat(savedCustomer.getFirstName()).isNotNull();
 		assertEquals(savedCustomer.getFirstName(), "raju");
 	}
 
@@ -151,6 +161,14 @@ public class EmployeeServiceTest {
 	private void given(Optional<Employee> findById) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Test
+	
+	public void deleteUserTest() {
+		Employee empl = new Employee(11, "subani", "shaik", "subanishaik", "java engineer", "hyd", 12345.0);
+		employeeService.deleteEmployees();
+		verify(employeeDao, times(1)).deleteAll();
 	}
 
 	@Test

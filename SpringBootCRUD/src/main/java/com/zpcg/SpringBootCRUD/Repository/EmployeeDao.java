@@ -27,5 +27,4 @@ public interface EmployeeDao extends JpaRepository<Employee, Integer> {
 	@Query(value = "SELECT e FROM Employee e ORDER BY salary DESC")
 	   public List<Employee> findAllSortedBySalary();
 
-//	Employee returnEmployee(int empId);
 }
